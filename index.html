@@ -8,7 +8,8 @@
 <meta name="keywords" content="XR Developer, AR Developer, VR Developer, Unity Developer, Meta Quest, Photon Fusion, AR Foundation, Ahmed Waleed">
 <meta name="author" content="Ahmed Waleed">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#07080c">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('aw-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Ahmed Waleed — XR / AR / VR Unity Developer">
 <meta property="og:description" content="Immersive Meta Quest training simulations and mobile AR experiences — built end to end with Unity 6, C# and Photon Fusion.">
@@ -49,11 +50,12 @@
     <li><a href="#about">About Me</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#portfolio">Portfolio Vid</a></li>
-    <li><a href="#experience">Experience</a></li>
     <li><a href="#certificate">Certificate</a></li>
     <li><a href="#volunteering">Volunteering</a></li>
   </ul></nav>
-  <button class="nav-toggle" id="navToggle" aria-label="menu"><span></span><span></span><span></span></button>
+  <div class="header-actions">
+    <button class="nav-toggle" id="navToggle" aria-label="menu"><span></span><span></span><span></span></button>
+  </div>
 </header>
 
 <main>
@@ -233,129 +235,18 @@
     </div>
   </section>
 
-  <!-- ============ EXPERIENCE ============ -->
-  <section id="experience" class="stack-section">
-    <div class="section-video-bg-wrap" aria-hidden="true">
-      <video class="section-video-bg-source" data-cinema="reel4" muted loop playsinline preload="none"></video>
-      <div class="section-video-overlay"></div>
-    </div>
-    <div class="section-head">
-      <span class="tag">03 / CAREER</span>
-      <h2>Experience</h2>
-      <p>Roles and projects that shaped my AR/VR development path.</p>
-    </div>
-
-    <div class="timeline" id="timelineWrap">
-      <span class="t-line" aria-hidden="true"></span>
-
-      <div class="t-row left">
-        <div class="t-card"
-          data-detail-title="XR / VR Developer — PTTI"
-          data-detail-tag="Jul 2025 — Present · New York, USA (Remote)"
-          data-detail-img=""
-          data-detail-link=""
-          data-detail-body="Built three standalone VR training simulations — Welding, Manufacturing Facility, and Drywall &amp; Carpentry — shipped end-to-end for Meta Quest 2/3/3S in Unity 6.||Integrated Photon Fusion multiplayer networking for shared training sessions across trainees.||Drove a 45–50% runtime performance improvement through draw-call batching, texture atlasing and occlusion culling.||Owned QA and release validation across single-player and multiplayer builds before every Quest Store push.">
-          <span class="t-period">Jul 2025 — Present</span>
-          <h3>XR / VR Developer</h3>
-          <div class="t-org">PTTI · New York, USA (Remote)</div>
-          <p>Built three standalone VR training simulations — Welding, Manufacturing Facility, Drywall &amp; Carpentry — for Meta Quest 2/3/3S in Unity 6, with Photon Fusion multiplayer and a 45–50% performance improvement.</p>
-          <button class="t-cta" type="button">View Details<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <div class="t-dot"></div>
-      </div>
-
-      <div class="t-row right">
-        <div class="t-card"
-          data-detail-title="Team Lead — MakTek"
-          data-detail-tag="Mar 2024 — Sep 2024 · Dubai, UAE"
-          data-detail-img=""
-          data-detail-link=""
-          data-detail-body="Led AI product development on KChat, a GPT-based support chatbot, from spec to client demo.||Ran Agile/Scrum delivery — sprint planning, backlog grooming, daily standups — across a cross-functional team.||Owned QA cycles and coordinated release checkpoints with stakeholders in Dubai and remote engineers.">
-          <span class="t-period">Mar 2024 — Sep 2024</span>
-          <h3>Team Lead</h3>
-          <div class="t-org">MakTek · Dubai, UAE</div>
-          <p>Led AI product development on KChat, a GPT-based chatbot, running Agile/Scrum delivery across sprint planning, QA, and client demos.</p>
-          <button class="t-cta" type="button">View Details<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <div class="t-dot"></div>
-      </div>
-
-      <div class="t-row left">
-        <div class="t-card"
-          data-detail-title="WordPress Developer — Byte Flow"
-          data-detail-tag="Jan 2024 — Feb 2024 · Kohat, Pakistan"
-          data-detail-img=""
-          data-detail-link=""
-          data-detail-body="Developed responsive client websites using WordPress, HTML and CSS.||Focused on Core Web Vitals — image compression, caching and script deferral for faster load times.||Handled cross-browser and cross-device QA before handover.">
-          <span class="t-period">Jan 2024 — Feb 2024</span>
-          <h3>WordPress Developer</h3>
-          <div class="t-org">Byte Flow · Kohat, Pakistan</div>
-          <p>Developed responsive websites using WordPress, HTML and CSS with a focus on performance optimization.</p>
-          <button class="t-cta" type="button">View Details<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <div class="t-dot"></div>
-      </div>
-
-      <div class="t-row right">
-        <div class="t-card"
-          data-detail-title="Marketing Executive — Faaray Group"
-          data-detail-tag="Mar 2023 — Dec 2023 · Kohat, Pakistan"
-          data-detail-img=""
-          data-detail-link=""
-          data-detail-body="Created and executed digital marketing and branding strategy for client acquisition.||Ran paid and organic social campaigns, tracking growth and engagement metrics.||Coordinated with design and sales teams to keep brand messaging consistent across channels.">
-          <span class="t-period">Mar 2023 — Dec 2023</span>
-          <h3>Marketing Executive</h3>
-          <div class="t-org">Faaray Group of Companies · Kohat, Pakistan</div>
-          <p>Created and executed digital marketing and branding strategies for client acquisition and social media growth.</p>
-          <button class="t-cta" type="button">View Details<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <div class="t-dot"></div>
-      </div>
-
-      <div class="t-row left">
-        <div class="t-card"
-          data-detail-title="Management Trainee — Zawiya Academy"
-          data-detail-tag="Aug 2022 — Oct 2022 · Rawalpindi, Pakistan"
-          data-detail-img=""
-          data-detail-link=""
-          data-detail-body="Assisted in marketing and operational management for academic programs.||Supported day-to-day coordination between instructors, students and admin staff.">
-          <span class="t-period">Aug 2022 — Oct 2022</span>
-          <h3>Management Trainee</h3>
-          <div class="t-org">Zawiya Academy · Rawalpindi, Pakistan</div>
-          <p>Assisted in marketing and operational management for academic programs.</p>
-          <button class="t-cta" type="button">View Details<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <div class="t-dot"></div>
-      </div>
-
-      <div class="t-row right">
-        <div class="t-card"
-          data-detail-title="Trainee, National Expansion Plan — NIC Kohat"
-          data-detail-tag="Feb 2022 — Sep 2022 · Kohat, Pakistan"
-          data-detail-img=""
-          data-detail-link=""
-          data-detail-body="Supported startup incubation and business research at Kohat's National Incubation Center.||Assisted early-stage founders with research and go-to-market groundwork as part of a national expansion initiative.">
-          <span class="t-period">Feb 2022 — Sep 2022</span>
-          <h3>Trainee, National Expansion Plan</h3>
-          <div class="t-org">NIC Kohat · Kohat, Pakistan</div>
-          <p>Supported startup incubation and business research.</p>
-          <button class="t-cta" type="button">View Details<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-        </div>
-        <div class="t-dot"></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ CERTIFICATES ============ -->
   <section id="certificate" class="stack-section">
     <div class="section-head">
       <span class="tag">04 / PROOF OF WORK</span>
-      <h2>Certificates</h2>
-      <p>A fanned deck — scroll in to deal the cards out.</p>
+      <h2>Certificates <em>Ring</em></h2>
+      <p>Six verified credentials locked in a rotating 3D ring — scroll to spin it and dock on each one.</p>
     </div>
 
-    <div class="cert-wrap" id="certWrap">
-      <div class="cert-card" data-detail-title="PMP Training" data-detail-tag="2025 · Project Management Institute prep" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-PMP-2025-001" data-detail-issued="2025" data-detail-url="" data-detail-body="Covers the PMBOK framework — initiating, planning, executing, monitoring and closing.||Prepares for the PMP exam with a focus on Agile and hybrid delivery models, which map directly onto sprint-based XR builds.">
+    <div class="xp-stage cert-stage" id="certStage">
+      <div class="xp-floor" aria-hidden="true"></div>
+      <div class="xp-ring" id="certRing">
+      <div class="xp-card cert-face" data-detail-title="PMP Training" data-detail-tag="2025 · Project Management Institute prep" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-PMP-2025-001" data-detail-issued="2025" data-detail-url="" data-detail-body="Covers the PMBOK framework — initiating, planning, executing, monitoring and closing.||Prepares for the PMP exam with a focus on Agile and hybrid delivery models, which map directly onto sprint-based XR builds.">
         <div class="cert-inner">
           <span class="cert-seal"><svg viewBox="0 0 40 52"><path d="M12 30l-5 20 8-6 5 7 4-21z" fill="#c85a17"/><path d="M28 30l5 20-8-6-5 7-4-21z" fill="#e86d22"/><circle cx="20" cy="18" r="15" fill="#e86d22"/><circle cx="20" cy="18" r="11" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="3 2.4"/><path d="M14.5 18.5l3.6 3.6 7-7.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="cert-serial">CERT · AW-PMP-2025-001</span>
@@ -366,7 +257,7 @@
           <div class="cert-meta"><span class="cert-year">Issued 2025</span><button class="cert-cta" type="button">Credentials<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button></div>
         </div>
       </div>
-      <div class="cert-card" data-detail-title="Google Project Management" data-detail-tag="2024 · Google Certificate" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-GPM-2024-002" data-detail-issued="2024" data-detail-url="" data-detail-body="Six-course professional certificate covering project initiation, planning, execution, and Agile fundamentals.||Applied directly to running sprint-based delivery for AR/VR client work.">
+      <div class="xp-card cert-face" data-detail-title="Google Project Management" data-detail-tag="2024 · Google Certificate" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-GPM-2024-002" data-detail-issued="2024" data-detail-url="" data-detail-body="Six-course professional certificate covering project initiation, planning, execution, and Agile fundamentals.||Applied directly to running sprint-based delivery for AR/VR client work.">
         <div class="cert-inner">
           <span class="cert-seal"><svg viewBox="0 0 40 52"><path d="M12 30l-5 20 8-6 5 7 4-21z" fill="#c85a17"/><path d="M28 30l5 20-8-6-5 7-4-21z" fill="#e86d22"/><circle cx="20" cy="18" r="15" fill="#e86d22"/><circle cx="20" cy="18" r="11" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="3 2.4"/><path d="M14.5 18.5l3.6 3.6 7-7.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="cert-serial">CERT · AW-GPM-2024-002</span>
@@ -377,7 +268,7 @@
           <div class="cert-meta"><span class="cert-year">Issued 2024</span><button class="cert-cta" type="button">Credentials<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button></div>
         </div>
       </div>
-      <div class="cert-card" data-detail-title="Meta AR Developer" data-detail-tag="2024 · Meta Specialization" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-META-AR-2024-003" data-detail-issued="2024" data-detail-url="" data-detail-body="Focused specialization on building AR experiences with Meta's tooling — Spark AR concepts, tracking and effect pipelines.||Forms the base for the AR Foundation and Vuforia work shipped in the portfolio reel.">
+      <div class="xp-card cert-face" data-detail-title="Meta AR Developer" data-detail-tag="2024 · Meta Specialization" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-META-AR-2024-003" data-detail-issued="2024" data-detail-url="" data-detail-body="Focused specialization on building AR experiences with Meta's tooling — Spark AR concepts, tracking and effect pipelines.||Forms the base for the AR Foundation and Vuforia work shipped in the portfolio reel.">
         <div class="cert-inner">
           <span class="cert-seal"><svg viewBox="0 0 40 52"><path d="M12 30l-5 20 8-6 5 7 4-21z" fill="#c85a17"/><path d="M28 30l5 20-8-6-5 7-4-21z" fill="#e86d22"/><circle cx="20" cy="18" r="15" fill="#e86d22"/><circle cx="20" cy="18" r="11" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="3 2.4"/><path d="M14.5 18.5l3.6 3.6 7-7.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="cert-serial">CERT · AW-META-AR-2024-003</span>
@@ -388,7 +279,7 @@
           <div class="cert-meta"><span class="cert-year">Issued 2024</span><button class="cert-cta" type="button">Credentials<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button></div>
         </div>
       </div>
-      <div class="cert-card" data-detail-title="Meta Front-End Developer" data-detail-tag="2023 · Meta Certificate" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-META-FE-2023-004" data-detail-issued="2023" data-detail-url="" data-detail-body="Professional certificate covering HTML, CSS, JavaScript, React and responsive UI patterns.||Underpins the front-end/UX side of AR product builds — HUDs, menus and in-experience UI.">
+      <div class="xp-card cert-face" data-detail-title="Meta Front-End Developer" data-detail-tag="2023 · Meta Certificate" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-META-FE-2023-004" data-detail-issued="2023" data-detail-url="" data-detail-body="Professional certificate covering HTML, CSS, JavaScript, React and responsive UI patterns.||Underpins the front-end/UX side of AR product builds — HUDs, menus and in-experience UI.">
         <div class="cert-inner">
           <span class="cert-seal"><svg viewBox="0 0 40 52"><path d="M12 30l-5 20 8-6 5 7 4-21z" fill="#c85a17"/><path d="M28 30l5 20-8-6-5 7-4-21z" fill="#e86d22"/><circle cx="20" cy="18" r="15" fill="#e86d22"/><circle cx="20" cy="18" r="11" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="3 2.4"/><path d="M14.5 18.5l3.6 3.6 7-7.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="cert-serial">CERT · AW-META-FE-2023-004</span>
@@ -399,7 +290,7 @@
           <div class="cert-meta"><span class="cert-year">Issued 2023</span><button class="cert-cta" type="button">Credentials<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button></div>
         </div>
       </div>
-      <div class="cert-card" data-detail-title="Meta Social Media Marketing" data-detail-tag="2023 · Meta Certificate" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-META-SMM-2023-005" data-detail-issued="2023" data-detail-url="" data-detail-body="Covers social strategy, paid/organic content and analytics across Meta's platforms.||Rounds out the marketing side of the CV — from Faaray Group campaigns to certified fundamentals.">
+      <div class="xp-card cert-face" data-detail-title="Meta Social Media Marketing" data-detail-tag="2023 · Meta Certificate" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-META-SMM-2023-005" data-detail-issued="2023" data-detail-url="" data-detail-body="Covers social strategy, paid/organic content and analytics across Meta's platforms.||Rounds out the marketing side of the CV — from Faaray Group campaigns to certified fundamentals.">
         <div class="cert-inner">
           <span class="cert-seal"><svg viewBox="0 0 40 52"><path d="M12 30l-5 20 8-6 5 7 4-21z" fill="#c85a17"/><path d="M28 30l5 20-8-6-5 7-4-21z" fill="#e86d22"/><circle cx="20" cy="18" r="15" fill="#e86d22"/><circle cx="20" cy="18" r="11" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="3 2.4"/><path d="M14.5 18.5l3.6 3.6 7-7.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="cert-serial">CERT · AW-META-SMM-2023-005</span>
@@ -410,7 +301,7 @@
           <div class="cert-meta"><span class="cert-year">Issued 2023</span><button class="cert-cta" type="button">Credentials<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button></div>
         </div>
       </div>
-      <div class="cert-card" data-detail-title="Mobile Marketing & Analytics" data-detail-tag="2023 · University of California, Irvine" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-UCI-MMA-2023-006" data-detail-issued="2023" data-detail-url="" data-detail-body="Covers mobile marketing channels, attribution and analytics fundamentals.||Useful for positioning and launching AR/VR products — understanding acquisition funnels and engagement metrics.">
+      <div class="xp-card cert-face" data-detail-title="Mobile Marketing & Analytics" data-detail-tag="2023 · University of California, Irvine" data-detail-img="" data-detail-link="" data-detail-cred-id="AW-UCI-MMA-2023-006" data-detail-issued="2023" data-detail-url="" data-detail-body="Covers mobile marketing channels, attribution and analytics fundamentals.||Useful for positioning and launching AR/VR products — understanding acquisition funnels and engagement metrics.">
         <div class="cert-inner">
           <span class="cert-seal"><svg viewBox="0 0 40 52"><path d="M12 30l-5 20 8-6 5 7 4-21z" fill="#c85a17"/><path d="M28 30l5 20-8-6-5 7-4-21z" fill="#e86d22"/><circle cx="20" cy="18" r="15" fill="#e86d22"/><circle cx="20" cy="18" r="11" fill="none" stroke="#fff" stroke-width="1.4" stroke-dasharray="3 2.4"/><path d="M14.5 18.5l3.6 3.6 7-7.4" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span class="cert-serial">CERT · AW-UCI-MMA-2023-006</span>
@@ -420,6 +311,12 @@
           <div class="cert-sig"><i></i><span>Authorized Signature</span></div>
           <div class="cert-meta"><span class="cert-year">Issued 2023</span><button class="cert-cta" type="button">Credentials<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button></div>
         </div>
+      </div>
+
+      <div class="xp-hud" aria-hidden="true">
+        <div class="xp-counter"><b id="certIndex">01</b><span>/ 06</span></div>
+        <div class="xp-dots" id="certDots"></div>
+        <span class="xp-hud-tag">// SCROLL TO ROTATE</span>
       </div>
     </div>
 
@@ -440,8 +337,8 @@
 
     <div class="section-head">
       <span class="tag">05 / COMMUNITY IMPACT</span>
-      <h2>Volunteering <em>Field Log</em></h2>
-      <p>Teaching, mentoring and sharing practical digital skills beyond product delivery.</p>
+      <h2>Volunteering <em>Dossiers</em></h2>
+      <p>Three classified mission files — scroll to unseal each dossier.</p>
     </div>
 
     <div class="impact-intro">
@@ -452,47 +349,65 @@
       <div class="impact-copy"><b>KNOWLEDGE → PEOPLE → PROGRESS</b><span>Turning hands-on experience into practical learning for the next generation of builders.</span></div>
     </div>
 
-    <div class="vol-grid" id="volWrap">
-      <article class="vol-card vol-a">
-        <span class="vol-watermark">01</span>
-        <div class="vol-top"><span class="vol-period">JUL — SEP 2025</span><span class="vol-chip">MISSION 01</span></div>
-        <div class="vol-visual">
-          <div class="visual-rings"><i></i><i></i><i></i></div>
-          <div class="visual-icon"><span>EC</span></div>
-          <span class="visual-caption">FIELD TRAINING</span>
+    <div class="dos-field" id="dosField">
+      <article class="dos-card">
+        <div class="dos-inner">
+          <div class="dos-content">
+            <div class="dos-meta"><span class="vol-period">JUL — SEP 2025</span><span class="vol-chip">MISSION 01</span></div>
+            <h4>E-Commerce Trainer</h4>
+            <div class="vol-org">Higher Education &amp; Regulatory Authority, KPK</div>
+            <p>Trained students in e-commerce strategy and campaign execution as part of a youth upskilling initiative.</p>
+            <div class="vol-tags"><span>E-COMMERCE</span><span>TRAINING</span><span>CAMPAIGNS</span></div>
+            <div class="dos-foot"><i></i><span>STATUS // COMPLETED</span><b>VOL-2025-01</b></div>
+          </div>
+          <div class="dos-flap">
+            <span class="dos-tab">MISSION 01</span>
+            <i class="dos-ring"></i><i class="dos-ring r2"></i>
+            <span class="dos-glyph">EC</span>
+            <span class="dos-cap">FIELD TRAINING</span>
+            <span class="dos-file">FILE // VOL-2025-01</span>
+          </div>
         </div>
-        <h4>E-Commerce Trainer</h4>
-        <div class="vol-org">Higher Education &amp; Regulatory Authority, KPK</div>
-        <p>Trained students in e-commerce strategy and campaign execution as part of a youth upskilling initiative.</p>
-        <div class="vol-tags"><span>E-COMMERCE</span><span>TRAINING</span><span>CAMPAIGNS</span></div>
       </article>
 
-      <article class="vol-card vol-b">
-        <span class="vol-watermark">02</span>
-        <div class="vol-top"><span class="vol-period">MAR — JUL 2025</span><span class="vol-chip">MISSION 02</span></div>
-        <div class="vol-visual">
-          <div class="visual-rings"><i></i><i></i><i></i></div>
-          <div class="visual-icon"><span>SEO</span></div>
-          <span class="visual-caption">DIGITAL SKILLS</span>
+      <article class="dos-card">
+        <div class="dos-inner">
+          <div class="dos-content">
+            <div class="dos-meta"><span class="vol-period">MAR — JUL 2025</span><span class="vol-chip">MISSION 02</span></div>
+            <h4>SEO &amp; Digital Marketing Trainer</h4>
+            <div class="vol-org">KUST / NAVTTC</div>
+            <p>Trained students in SEO, content marketing and digital strategy using real-world campaign case studies.</p>
+            <div class="vol-tags"><span>SEO</span><span>CONTENT</span><span>MARKETING</span></div>
+            <div class="dos-foot"><i></i><span>STATUS // COMPLETED</span><b>VOL-2025-02</b></div>
+          </div>
+          <div class="dos-flap">
+            <span class="dos-tab">MISSION 02</span>
+            <i class="dos-ring"></i><i class="dos-ring r2"></i>
+            <span class="dos-glyph">SEO</span>
+            <span class="dos-cap">DIGITAL SKILLS</span>
+            <span class="dos-file">FILE // VOL-2025-02</span>
+          </div>
         </div>
-        <h4>SEO &amp; Digital Marketing Trainer</h4>
-        <div class="vol-org">KUST / NAVTTC</div>
-        <p>Trained students in SEO, content marketing and digital strategy using real-world campaign case studies.</p>
-        <div class="vol-tags"><span>SEO</span><span>CONTENT</span><span>MARKETING</span></div>
       </article>
 
-      <article class="vol-card vol-c">
-        <span class="vol-watermark">03</span>
-        <div class="vol-top"><span class="vol-period">2026</span><span class="vol-chip">MISSION 03</span></div>
-        <div class="vol-visual">
-          <div class="visual-rings"><i></i><i></i><i></i></div>
-          <div class="visual-icon"><span>XR</span></div>
-          <span class="visual-caption">REALITY HACK</span>
+      <article class="dos-card">
+        <div class="dos-inner">
+          <div class="dos-content">
+            <div class="dos-meta"><span class="vol-period">2026</span><span class="vol-chip">MISSION 03</span></div>
+            <h4>MIT Reality Hack 2026</h4>
+            <div class="vol-org">Participant</div>
+            <p>Participated in an immersive-tech hackathon environment focused on rapid experimentation and XR collaboration.</p>
+            <div class="vol-tags"><span>XR</span><span>HACKATHON</span><span>COLLABORATION</span></div>
+            <div class="dos-foot live"><i></i><span>STATUS // ACTIVE</span><b>VOL-2026-03</b></div>
+          </div>
+          <div class="dos-flap">
+            <span class="dos-tab">MISSION 03</span>
+            <i class="dos-ring"></i><i class="dos-ring r2"></i>
+            <span class="dos-glyph">XR</span>
+            <span class="dos-cap">REALITY HACK</span>
+            <span class="dos-file">FILE // VOL-2026-03</span>
+          </div>
         </div>
-        <h4>MIT Reality Hack 2026</h4>
-        <div class="vol-org">Participant</div>
-        <p>Participated in an immersive-tech hackathon environment focused on rapid experimentation and XR collaboration.</p>
-        <div class="vol-tags"><span>XR</span><span>HACKATHON</span><span>COLLABORATION</span></div>
       </article>
     </div>
 
@@ -524,7 +439,6 @@
         <li><a href="#about">About Me</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#portfolio">Portfolio Vid</a></li>
-        <li><a href="#experience">Experience</a></li>
         <li><a href="#certificate">Certificate</a></li>
         <li><a href="#volunteering">Volunteering</a></li>
       </ul>

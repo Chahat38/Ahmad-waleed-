@@ -3,9 +3,7 @@ export function initStats() {
   if (!wrap) return;
   const nums = wrap.querySelectorAll('.hstat-num');
 
-  const io = new IntersectionObserver(entries => {
-    if (!entries.some(e => e.isIntersecting)) return;
-    io.disconnect();
+  function run() {
     nums.forEach(el => {
       const target = +el.closest('.hstat').dataset.count;
       const suffix = el.closest('.hstat').dataset.suffix || '';
@@ -16,6 +14,13 @@ export function initStats() {
         el.textContent = Math.round(target * eased) + suffix;
         if (p < 1) requestAnimationFrame(step);
       })(t0);
+    });
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) run();
+      else nums.forEach(el => { el.textContent = '0'; });
     });
   }, { threshold: 0.4 });
   io.observe(wrap);

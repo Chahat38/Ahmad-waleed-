@@ -20,6 +20,10 @@ export function initGallery() {
         <video muted loop playsinline preload="metadata" poster="${p.poster}"></video>
         <span class="v-num">0${i + 1}</span>
         <span class="v-scan"></span>
+        <button class="v-play" type="button" aria-label="Play / pause video">
+          <svg class="ico-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="ico-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+        </button>
       </div>
       <div class="v-info">
         <span class="v-tag">${p.tag}</span>
@@ -33,6 +37,20 @@ export function initGallery() {
     const vid = card.querySelector('video');
     vid.dataset.src = p.video;
     vids.push(vid);
+
+    const playBtn = card.querySelector('.v-play');
+    playBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      if (vid.paused) {
+        delete vid.dataset.userPaused;
+        requestPlay(vid);
+      } else {
+        vid.dataset.userPaused = '1';
+        vid.pause();
+      }
+    });
+    vid.addEventListener('play', () => playBtn.classList.add('playing'));
+    vid.addEventListener('pause', () => playBtn.classList.remove('playing'));
 
     card.querySelector('.v-cta').addEventListener('click', () => {
       window.dispatchEvent(new CustomEvent('open-detail', {
@@ -95,7 +113,7 @@ export function initGallery() {
       card.style.opacity = (1 - Math.min(0.5, Math.abs(norm) * 0.75)).toFixed(3);
       const center = Math.abs(d) < r.width * 0.48;
       card.classList.toggle('is-center', center);
-      if (center) requestPlay(vids[i]);
+      if (center) { if (!vids[i].dataset.userPaused) requestPlay(vids[i]); }
       else releasePause(vids[i]);
     });
   }

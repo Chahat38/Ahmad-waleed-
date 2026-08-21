@@ -1,20 +1,9 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
-const decoderPath = (import.meta.env.BASE_URL || '/') + 'decoder/draco/';
-let dracoLoader = null;
 let gltfLoader = null;
-
-function getLoaders() {
-  if (!dracoLoader) {
-    dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath(decoderPath);
-  }
-  if (!gltfLoader) {
-    gltfLoader = new GLTFLoader();
-    gltfLoader.setDRACOLoader(dracoLoader);
-  }
+function getLoader() {
+  if (!gltfLoader) gltfLoader = new GLTFLoader();
   return gltfLoader;
 }
 
@@ -67,6 +56,34 @@ export function createLazyGLBScene(el, modelUrl, { targetSize = 3, spin = 0, bob
   function start() { if (running || !renderer) return; running = true; raf = requestAnimationFrame(loop); }
   function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; running = false; }
 
+  function loadModel() {
+    setState('loading');
+    getLoader().load(modelUrl,
+      gltf => {
+        group = gltf.scene;
+        const box = new THREE.Box3().setFromObject(group);
+        const size = new THREE.Vector3(), center = new THREE.Vector3();
+        box.getSize(size); box.getCenter(center);
+        const scale = targetSize / (Math.max(size.x, size.y, size.z) || 1);
+        group.scale.setScalar(scale);
+        group.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+        group.userData.baseY = group.position.y;
+        group.updateMatrixWorld(true);
+        scene.add(group);
+        fitCamera();
+        requestAnimationFrame(fitCamera);
+        setTimeout(fitCamera, 350);
+        setState('ready');
+        start();
+      },
+      undefined,
+      err => {
+        console.error('[3D] load failed:', modelUrl, err);
+        setState('failed');
+      }
+    );
+  }
+
   function init() {
     inited = true;
     try {
@@ -91,26 +108,14 @@ export function createLazyGLBScene(el, modelUrl, { targetSize = 3, spin = 0, bob
 
     addEventListener('resize', fitCamera, { passive: true });
 
-    getLoaders().load(modelUrl,
-      gltf => {
-        group = gltf.scene;
-        const box = new THREE.Box3().setFromObject(group);
-        const size = new THREE.Vector3(), center = new THREE.Vector3();
-        box.getSize(size); box.getCenter(center);
-        const scale = targetSize / (Math.max(size.x, size.y, size.z) || 1);
-        group.scale.setScalar(scale);
-        group.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
-        group.userData.baseY = group.position.y;
-        group.updateMatrixWorld(true);
-        scene.add(group);
-        fitCamera();
-        requestAnimationFrame(fitCamera);
-        setState('ready');
-        start();
-      },
-      undefined,
-      err => { console.warn('[3D] load failed:', modelUrl, err); setState('failed'); }
-    );
+    loadModel();
+
+    el.addEventListener('click', () => {
+      if (!el.classList.contains('is-failed') || group) return;
+      if (group) scene.remove(group);
+      group = null;
+      loadModel();
+    });
   }
 
   const io = new IntersectionObserver(entries => {
