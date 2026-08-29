@@ -36,28 +36,31 @@ function heroFX() {
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 55%', scrub: true }
   });
 
-  /* entrance — replays every time you scroll back to the top */
   gsap.from('.hero .status-chip', {
-    y: -30, opacity: 0, duration: 0.7, ease: 'power3.out',
-    scrollTrigger: replay('.hero', 'top top')
+    y: -30, opacity: 0, duration: 0.7, ease: 'power3.out'
+  });
+  gsap.from('.hero .eyebrow', {
+    opacity: 0, duration: 0.8, delay: 0.05, ease: 'power3.out'
+  });
+  gsap.from('.hero-text', {
+    y: 40, opacity: 0, duration: 0.9, delay: 0.35, ease: 'power3.out'
+  });
+  gsap.from('.hero-stats-wrap', {
+    y: 50, opacity: 0, duration: 0.9, delay: 0.55, ease: 'power3.out'
   });
   gsap.from('.hero-name-left', {
     xPercent: -60, opacity: 0, rotateY: 30, transformPerspective: 900,
-    duration: 1.1, delay: 0.15, ease: 'power4.out',
-    scrollTrigger: replay('.hero', 'top top')
+    duration: 1.1, delay: 0.15, ease: 'power4.out'
   });
   gsap.from('.hero-name-right', {
     xPercent: 60, opacity: 0, rotateY: -30, transformPerspective: 900,
-    duration: 1.1, delay: 0.15, ease: 'power4.out',
-    scrollTrigger: replay('.hero', 'top top')
+    duration: 1.1, delay: 0.15, ease: 'power4.out'
   });
   gsap.from('.hero-model-layer', {
-    scale: 0.4, opacity: 0, duration: 1.2, delay: 0.3, ease: 'power4.out',
-    scrollTrigger: replay('.hero', 'top top')
+    scale: 0.4, opacity: 0, duration: 1.2, delay: 0.3, ease: 'power4.out'
   });
   gsap.from('.hstat', {
-    y: 44, opacity: 0, stagger: 0.08, duration: 0.7, delay: 0.5, ease: 'power3.out',
-    scrollTrigger: replay('#heroStats', 'top 95%')
+    y: 44, opacity: 0, stagger: 0.08, duration: 0.7, delay: 0.5, ease: 'power3.out'
   });
 
   /* pointer parallax on the big words */
@@ -129,11 +132,6 @@ function volunteeringIntroFX() {
   gsap.from('.impact-intro', {
     y: 64, opacity: 0, duration: 0.85, ease: 'power3.out',
     scrollTrigger: replay('.impact-intro', 'top 85%')
-  });
-
-  gsap.from('.community-links', {
-    y: 42, opacity: 0, duration: 0.7, ease: 'power3.out',
-    scrollTrigger: replay('.community-links', 'top 90%')
   });
 }
 

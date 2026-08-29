@@ -27,7 +27,7 @@ export function initCertRing() {
   }
   const dots = dotsWrap ? [...dotsWrap.children] : [];
 
-  const desk = matchMedia('(min-width: 861px)');
+  const desk = matchMedia('(min-width: 1025px)');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let radius = 0;
 
@@ -74,12 +74,23 @@ export function initCertRing() {
       }
     });
     renderRing();
-  }
 
-  gsap.from(stage, {
-    scale: 0.85, opacity: 0, duration: 1, ease: 'power3.out',
-    scrollTrigger: { trigger: stage, start: 'top 78%', toggleActions: 'play none none reverse' }
-  });
+    gsap.from(stage, {
+      scale: 0.85, opacity: 0, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: stage, start: 'top 78%', toggleActions: 'play none none reverse' }
+    });
+  } else {
+    /* mobile / reduced-motion: keep the ring upright and let each
+       certificate card gently reveal in as it scrolls into view */
+    setActive();
+    gsap.utils.toArray(cards).forEach((card, i) => {
+      gsap.from(card, {
+        y: 60, opacity: 0, scale: 0.9, duration: 0.7,
+        delay: (i % 2) * 0.12, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 92%', toggleActions: 'play none none reverse' }
+      });
+    });
+  }
 }
 
 /* ============ VOLUNTEERING — MISSION DOSSIERS (no pin) ============
@@ -91,11 +102,18 @@ export function initDossiers() {
 
   const cards = gsap.utils.toArray('.dos-card', field);
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const desk = matchMedia('(min-width: 1025px)');
   if (!cards.length) return;
 
-  if (reduced) {
+  if (reduced || !desk.matches) {
     gsap.set('.dos-flap', { rotationY: -150 });
     gsap.set('.dos-content', { opacity: 1, y: 0, scale: 1 });
+    cards.forEach(card => {
+      gsap.from(card, {
+        y: 56, opacity: 0, duration: 0.75, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none reverse' }
+      });
+    });
     return;
   }
 

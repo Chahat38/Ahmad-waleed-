@@ -41,6 +41,10 @@ export function initGallery() {
     const playBtn = card.querySelector('.v-play');
     playBtn.addEventListener('click', e => {
       e.stopPropagation();
+      if (!vid.src && vid.dataset.src) {
+        vid.src = vid.dataset.src;
+        vid.load();
+      }
       if (vid.paused) {
         delete vid.dataset.userPaused;
         requestPlay(vid);
@@ -66,17 +70,18 @@ export function initGallery() {
   function buildDesktop() {
     const getDist = () => Math.max(0, track.scrollWidth - innerWidth);
 
-    st = gsap.to(track, {
+    const st = gsap.to(track, {
       x: () => -getDist(),
       ease: 'none',
       scrollTrigger: {
         trigger: '#portfolio',
         start: 'top top',
-        end: () => '+=' + (getDist() + innerHeight * 0.2),
+        end: () => '+=' + (getDist() + innerHeight * 0.15),
         pin: true,
         scrub: 1,
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        refreshPriority: 1,
         onUpdate: self => {
           if (bar) bar.style.transform = `scaleX(${self.progress.toFixed(4)})`;
           const skew = gsap.utils.clamp(-5, 5, self.getVelocity() / -400);
@@ -86,9 +91,7 @@ export function initGallery() {
       }
     });
 
-    ScrollTrigger.addEventListener('refreshInit', () => gsap.set(track, { x: 0 }));
-    ScrollTrigger.addEventListener('refresh', () => focusCenter());
-    requestAnimationFrame(() => focusCenter());
+    return st;
   }
 
   const rotSet = new WeakMap();
@@ -113,19 +116,11 @@ export function initGallery() {
       card.style.opacity = (1 - Math.min(0.5, Math.abs(norm) * 0.75)).toFixed(3);
       const center = Math.abs(d) < r.width * 0.48;
       card.classList.toggle('is-center', center);
-      if (center) { if (!vids[i].dataset.userPaused) requestPlay(vids[i]); }
-      else releasePause(vids[i]);
+      if (!center) releasePause(vids[i]);
     });
   }
 
-  function buildMobile() {
-    cards.forEach((card, i) => {
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => e.isIntersecting ? requestPlay(vids[i]) : releasePause(vids[i]));
-      }, { threshold: 0.4 });
-      io.observe(card);
-    });
-  }
+  function buildMobile() {}
 
   if (isDesktop()) buildDesktop();
   else buildMobile();
