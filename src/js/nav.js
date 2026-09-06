@@ -13,7 +13,10 @@ export function initNav() {
   links.forEach(a => a.addEventListener('click', () => document.body.classList.remove('nav-open')));
 
   const sections = links
-    .map(a => document.querySelector(a.getAttribute('href')))
+    .map(a => {
+      const href = a.getAttribute('href');
+      return href && href.startsWith('#') ? document.querySelector(href) : null;
+    })
     .filter(Boolean);
 
   const io = new IntersectionObserver(entries => {
