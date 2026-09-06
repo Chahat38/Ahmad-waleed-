@@ -31,29 +31,42 @@ export const cinema = {
 
 export const PORTFOLIO = [
   {
-    id: 'prototype',
-    title: 'VR Welding Training Sim',
-    tag: 'META QUEST · UNITY 6 · FUSION 2',
+    id: 'tourguide',
+    title: 'AR Tourist Guide — Historical Buildings',
+    tag: 'AR FOUNDATION · UNITY · XRCC 2026',
     video: pPrototype,
     poster: posterPrototype,
-    desc: 'Standalone multiplayer welding simulator for Quest 2/3/3S with realistic torch physics and scoring.',
+    desc: 'Award-winning AR tourist guide from XR Creator Con (XRCC) 2026 — point your phone at a heritage building and the "Visitor Companion" reveals visitor counts, historical info, ratings and more.',
     detail: [
-      'Full training loop — briefing, hands-on welding practice, graded evaluation and debrief.',
-      'Photon Fusion 2 shared-mode sessions so trainees and instructors join the same sim.',
-      '45–50% runtime performance improvement via batching, atlasing and occlusion culling.'
+      'Award Recipient at XR Creator Con (XRCC) 2026 — "Visitor Companion: See More, Miss Nothing" use case category.',
+      'Camera-triggered AR overlays on historical buildings with visitor count, ratings and historical background.',
+      'Unity + AR Foundation pipeline targeting mobile, tuned for quick point-and-scan usage at heritage sites.'
     ]
   },
   {
     id: 'bowling',
-    title: 'VR Bowling Multiplayer',
-    tag: 'META QUEST · PUN2 · PHYSICS',
+    title: 'AR Bowling Game (Final Year Project)',
+    tag: 'UNITY · C# · VUFORIA · ARCORE / ARKIT · ANDROID',
     video: pBowling,
     poster: posterBowling,
-    desc: 'Social VR bowling alley with room-scale throwing physics and real-time multiplayer lanes.',
+    desc: 'Native Android/mobile AR bowling game with plane detection, realistic physics, interactive scoring, TextMesh Pro UI, and mobile performance optimization.',
     detail: [
-      'PUN2 networking with synchronized ball physics and lane state across clients.',
-      'Velocity-based throw detection tuned against real bowling feel on Quest controllers.',
-      'Latency-compensated scoring so every client agrees on pin falls.'
+      'Plane detection and realistic physics for AR lanes.',
+      'Interactive scoring with TextMesh Pro UI.',
+      'Cross-platform ARCore / ARKit support and mobile performance optimization.'
+    ]
+  },
+  {
+    id: 'ecommerce',
+    title: 'AR E-Commerce Try-On',
+    tag: 'UNITY · TIKTOK EFFECT HOUSE · ANDROID (NATIVE)',
+    video: pEcommerce,
+    poster: posterEcommerce,
+    desc: 'AR try-on experience for jewelry and watches using live-camera 3D overlays, linked with e-commerce APIs for a real-time shopping experience.',
+    detail: [
+      'Live-camera 3D overlays for jewelry and watch try-on.',
+      'Linked with e-commerce APIs for a real-time shopping experience.',
+      'Unity + TikTok Effect House pipeline targeting native Android.'
     ]
   },
   {
@@ -93,19 +106,6 @@ export const PORTFOLIO = [
       'Vuforia image targets printed across event branding trigger unique effect scenes.',
       'Particle systems and audio synced to each marker for a coordinated show.',
       'Optimized draw calls so the effects run smoothly on borrowed event devices.'
-    ]
-  },
-  {
-    id: 'ecommerce',
-    title: 'AR Ecommerce Try-On',
-    tag: 'AR FOUNDATION · RETAIL',
-    video: pEcommerce,
-    poster: posterEcommerce,
-    desc: 'Product preview AR for online stores — drop items into your space before you buy.',
-    detail: [
-      'Catalog-driven placement with scale/rotate gestures and shadow catching.',
-      'Lightweight asset pipeline keeps models under budget for fast mobile loads.',
-      'Deep-link ready so product pages can launch straight into AR view.'
     ]
   },
   {

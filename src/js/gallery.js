@@ -12,9 +12,14 @@ export function initGallery() {
   const cards = [];
   const vids = [];
 
+  function ensureSrc(vid) {
+    if (!vid.src && vid.dataset.src) { vid.src = vid.dataset.src; vid.load(); }
+  }
+
   PORTFOLIO.forEach((p, i) => {
     const card = document.createElement('article');
     card.className = 'v-card';
+    if (!p.video) card.classList.add('no-video');
     card.innerHTML = `
       <div class="v-media">
         <video muted loop playsinline preload="metadata" poster="${p.poster}"></video>
@@ -35,16 +40,27 @@ export function initGallery() {
     cards.push(card);
 
     const vid = card.querySelector('video');
-    vid.dataset.src = p.video;
+    if (p.video) vid.dataset.src = p.video;
     vids.push(vid);
 
+    const media = card.querySelector('.v-media');
+    media.addEventListener('click', () => {
+      if (!p.video) return;
+      ensureSrc(vid);
+      if (vid.paused) {
+        delete vid.dataset.userPaused;
+        requestPlay(vid);
+      } else {
+        vid.dataset.userPaused = '1';
+        vid.pause();
+      }
+    });
+
     const playBtn = card.querySelector('.v-play');
+    if (!p.video) playBtn.style.display = 'none';
     playBtn.addEventListener('click', e => {
       e.stopPropagation();
-      if (!vid.src && vid.dataset.src) {
-        vid.src = vid.dataset.src;
-        vid.load();
-      }
+      ensureSrc(vid);
       if (vid.paused) {
         delete vid.dataset.userPaused;
         requestPlay(vid);
@@ -70,7 +86,7 @@ export function initGallery() {
   function buildDesktop() {
     const getDist = () => Math.max(0, track.scrollWidth - innerWidth);
 
-    const st = gsap.to(track, {
+    st = gsap.to(track, {
       x: () => -getDist(),
       ease: 'none',
       scrollTrigger: {
@@ -82,6 +98,7 @@ export function initGallery() {
         anticipatePin: 1,
         invalidateOnRefresh: true,
         refreshPriority: 1,
+        onRefresh: focusCenter,
         onUpdate: self => {
           if (bar) bar.style.transform = `scaleX(${self.progress.toFixed(4)})`;
           const skew = gsap.utils.clamp(-5, 5, self.getVelocity() / -400);
@@ -106,6 +123,12 @@ export function initGallery() {
     skewTos.get(card)(val);
   }
 
+  const zSet = new WeakMap();
+  function setFront(card, z) {
+    if (!zSet.has(card)) zSet.set(card, gsap.quickSetter(card, 'z', 'px'));
+    zSet.get(card)(z);
+  }
+
   function focusCenter() {
     const cx = innerWidth / 2;
     cards.forEach((card, i) => {
@@ -116,11 +139,51 @@ export function initGallery() {
       card.style.opacity = (1 - Math.min(0.5, Math.abs(norm) * 0.75)).toFixed(3);
       const center = Math.abs(d) < r.width * 0.48;
       card.classList.toggle('is-center', center);
-      if (!center) releasePause(vids[i]);
+      setFront(card, center ? 46 : 0);
+      if (center) {
+        ensureSrc(vids[i]);
+        if (!vids[i].dataset.userPaused) requestPlay(vids[i]);
+      } else {
+        releasePause(vids[i]);
+      }
     });
   }
 
-  function buildMobile() {}
+  let mobileIO = null;
+  function buildMobile() {
+    mobileIO = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        const i = cards.indexOf(en.target);
+        const vid = vids[i];
+        if (!vid) return;
+        if (en.isIntersecting) {
+          ensureSrc(vid);
+          if (!vid.dataset.userPaused) requestPlay(vid);
+        } else {
+          releasePause(vid);
+        }
+      });
+    }, { threshold: 0.35 });
+    cards.forEach(c => mobileIO.observe(c));
+  }
+  function teardownMobile() {
+    if (mobileIO) { mobileIO.disconnect(); mobileIO = null; }
+    vids.forEach(v => releasePause(v));
+  }
+
+  const teardown = () => {
+    if (st) { st.scrollTrigger && st.scrollTrigger.kill(); st = null; }
+  };
+  addEventListener('resize', () => {
+    if (isDesktop() && !st) buildDesktop();
+    else if (!isDesktop() && st) teardown();
+    if (!isDesktop() && !mobileIO) buildMobile();
+    else if (isDesktop() && mobileIO) teardownMobile();
+  });
+  addEventListener('load', () => {
+    if (st && st.scrollTrigger) st.scrollTrigger.refresh();
+    if (isDesktop()) requestAnimationFrame(() => focusCenter());
+  });
 
   if (isDesktop()) buildDesktop();
   else buildMobile();

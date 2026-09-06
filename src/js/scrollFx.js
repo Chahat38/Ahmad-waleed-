@@ -11,6 +11,7 @@ export function initScrollFX() {
   heroFX();
   aboutFX();
   skillsFX();
+  experienceFX();
   volunteeringIntroFX();
   footerFX();
   hudFrame();
@@ -125,6 +126,88 @@ function skillsFX() {
       scrollTrigger: replay(el.parentElement, 'top 88%')
     });
   });
+}
+
+/* ================= EXPERIENCE — career log timeline ================= */
+function experienceFX() {
+  const entries = gsap.utils.toArray('.xp-entry');
+  const countEl = document.getElementById('xpActive');
+  const fill = document.getElementById('xpLogFill');
+  const yearsWrap = document.getElementById('xpLogYears');
+
+  entries.forEach((entry, i) => {
+    const body = entry.querySelector('.xp-entry-body');
+    if (!body) return;
+    const idx = document.createElement('span');
+    idx.className = 't-index';
+    idx.textContent = String(i + 1).padStart(2, '0');
+    body.appendChild(idx);
+    const period = entry.querySelector('.t-period');
+    if (period && yearsWrap) {
+      const li = document.createElement('li');
+      li.textContent = period.textContent;
+      li.setAttribute('role', 'button');
+      li.tabIndex = 0;
+      const go = () => entry.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      li.addEventListener('click', go);
+      li.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+      yearsWrap.appendChild(li);
+    }
+  });
+
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const setLive = i => {
+    if (countEl) countEl.textContent = String(i + 1).padStart(2, '0');
+    if (yearsWrap) Array.from(yearsWrap.children).forEach((li, j) => li.classList.toggle('on', j === i));
+  };
+
+  entries.forEach((entry, i) => {
+    ScrollTrigger.create({
+      trigger: entry, start: 'top 60%', end: 'bottom 42%',
+      onEnter: () => { entry.classList.add('is-live'); setLive(i); },
+      onLeave: () => entry.classList.remove('is-live'),
+      onEnterBack: () => { entry.classList.add('is-live'); setLive(i); },
+      onLeaveBack: () => entry.classList.remove('is-live')
+    });
+  });
+
+  if (reduced) return;
+
+  gsap.from('.xp-entry-body', {
+    x: () => -64, opacity: 0, duration: 0.85, stagger: 0.12, ease: 'power3.out',
+    scrollTrigger: replay('#xpTimeline', 'top 80%')
+  });
+  gsap.fromTo('.xp-timeline::before',
+    { scaleY: 0.06, opacity: 0 },
+    {
+      scaleY: 1, opacity: 1, duration: 1, ease: 'none',
+      scrollTrigger: { trigger: '#xpTimeline', start: 'top 72%', end: 'bottom 55%', scrub: 0.5 }
+    });
+  if (fill) {
+    gsap.fromTo(fill,
+      { scaleY: 0 },
+      {
+        scaleY: 1, ease: 'none',
+        scrollTrigger: { trigger: '#xpTimeline', start: 'top 68%', end: 'bottom 74%', scrub: 0.4 }
+      });
+  }
+
+  if (matchMedia('(hover: hover) and (min-width: 1025px)').matches) {
+    entries.forEach(entry => {
+      const bodyC = entry.querySelector('.xp-entry-body');
+      if (!bodyC) return;
+      const rx = gsap.quickTo(bodyC, 'rotationX', { duration: 0.6, ease: 'power2.out' });
+      const ry = gsap.quickTo(bodyC, 'rotationY', { duration: 0.6, ease: 'power2.out' });
+      entry.addEventListener('pointermove', e => {
+        const b = entry.getBoundingClientRect();
+        const px = (e.clientX - b.left) / b.width - 0.5;
+        const py = (e.clientY - b.top) / b.height - 0.5;
+        rx(py * -5); ry(px * 7);
+      });
+      entry.addEventListener('pointerleave', () => { rx(0); ry(0); });
+    });
+  }
 }
 
 /* ================= VOLUNTEERING intro + links (dossier flaps run in sections3d) ================= */

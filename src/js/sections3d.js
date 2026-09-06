@@ -27,9 +27,30 @@ export function initCertRing() {
   }
   const dots = dotsWrap ? [...dotsWrap.children] : [];
 
-  const desk = matchMedia('(min-width: 1025px)');
+  const desk = matchMedia('(min-width: 1290px)');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let radius = 0;
+  let rotTween = null;
+
+  function buildCertBack(card, i) {
+    if (!card.classList.contains('cert-face') || card.querySelector('.cert-back')) return;
+    const serial = card.querySelector('.cert-serial');
+    const org = card.querySelector('.cert-org');
+    const logo = card.querySelector('.cert-logo');
+    const back = document.createElement('div');
+    back.className = 'cert-back';
+    back.innerHTML = `
+      <span class="cert-back-ribbon">VERIFIED CREDENTIAL</span>
+      <div class="cert-back-hol"><i></i><i></i><i></i></div>
+      <div class="cert-back-core">
+        <b class="cert-back-id">${serial ? serial.textContent.trim() : ''}</b>
+        <span class="cert-back-name">${logo ? logo.textContent.trim() : 'AW'}</span>
+        <span class="cert-back-org">${org ? org.textContent.trim() : ''}</span>
+      </div>
+      <div class="cert-back-bars"><i></i><i></i><i></i></div>
+      <span class="cert-back-strip">SIGNED · SEALED · ${String(i + 1).padStart(2, '0')}/06</span>`;
+    card.appendChild(back);
+  }
 
   function layout() {
     if (desk.matches) {
@@ -56,39 +77,102 @@ export function initCertRing() {
      nothing ever pokes out of the stage box into neighbouring sections */
   const state = { rot: 30 };
   function renderRing() {
+    /* never apply the 3D transform while in the responsive (flat) layout —
+       otherwise a resized window leaves the ring skewed / upside-down */
+    if (!desk.matches) { ring.style.transform = ''; return; }
     ring.style.transform = `translateZ(${-radius}px) rotateY(${state.rot}deg)`;
     setActive();
   }
 
-  if (desk.matches && !reduced) {
-    gsap.to(state, {
+  function startSpin() {
+    if (rotTween || !desk.matches) return;
+    rotTween = gsap.to(state, {
       rot: 30 - 360,
       ease: 'none',
-      onUpdate: renderRing,
-      scrollTrigger: {
-        trigger: '#certificate',
-        start: 'top 55%',
-        end: 'bottom 60%',
-        scrub: 0.6,
-        invalidateOnRefresh: true
-      }
+      duration: 36,
+      repeat: -1,
+      onUpdate: renderRing
     });
     renderRing();
+  }
+  function stopSpin() {
+    if (rotTween) { rotTween.kill(); rotTween = null; }
+    ring.style.transform = '';
+  }
+
+  if (desk.matches && !reduced) {
+    cards.forEach((card, i) => buildCertBack(card, i));
+
+    /* AUTO-ROTATE LOOP — the ring slowly spins itself forever,
+       no scrolling needed; both card faces stay readably upright. */
+    startSpin();
 
     gsap.from(stage, {
       scale: 0.85, opacity: 0, duration: 1, ease: 'power3.out',
       scrollTrigger: { trigger: stage, start: 'top 78%', toggleActions: 'play none none reverse' }
     });
   } else {
-    /* mobile / reduced-motion: keep the ring upright and let each
-       certificate card gently reveal in as it scrolls into view */
+    /* responsive / reduced-motion: flat, upright stack where every
+       certificate stays fully readable. A light scroll-scrub makes each
+       card rise, straighten and sharpen as it enters the viewport, then
+       gently step aside as the next card takes over — pure scrub, so a
+       card can never get stuck invisible. */
     setActive();
-    gsap.utils.toArray(cards).forEach((card, i) => {
-      gsap.from(card, {
-        y: 60, opacity: 0, scale: 0.9, duration: 0.7,
-        delay: (i % 2) * 0.12, ease: 'power3.out',
-        scrollTrigger: { trigger: card, start: 'top 92%', toggleActions: 'play none none reverse' }
+    if (reduced) {
+      cards.forEach(c => { c.style.opacity = '1'; });
+    } else {
+      cards.forEach(card => {
+        gsap.fromTo(card,
+          { y: 150, rotateX: -16, scale: 0.92, autoAlpha: 0 },
+          { y: 0, rotateX: 0, scale: 1, autoAlpha: 1, ease: 'power3.out',
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: card, start: 'top 94%', end: 'top 42%',
+              scrub: 0.7, toggleActions: 'play none none reverse',
+              invalidateOnRefresh: true
+            } });
+        gsap.to(card, {
+          y: -110, rotateX: 8, scale: 0.94, autoAlpha: 0.25, ease: 'none',
+          scrollTrigger: {
+            trigger: card, start: 'top 5%', end: 'top -26%',
+            scrub: 0.8, invalidateOnRefresh: true
+          }
+        });
       });
+    }
+  }
+
+  /* guard against resizing across the desktop / responsive breakpoint:
+     entering desktop restarts the auto-spin, leaving it resets everything
+     back to a clean upright flat stack (fixes skew/"ulta" cards) */
+  let wasDesk = desk.matches && !reduced;
+  addEventListener('resize', () => {
+    const isDesk = desk.matches && !reduced;
+    layout();
+    if (isDesk && !wasDesk) {
+      state.rot = 30;
+      startSpin();
+      setActive();
+    } else if (!isDesk && wasDesk) {
+      stopSpin();
+      cards.forEach(c => { c.style.transform = ''; });
+    }
+    wasDesk = isDesk;
+  }, { passive: true });
+
+  /* Awards must NOT appear until every certificate has revealed:
+     on desktop that means the ring has fully rotated through,
+     on mobile it means the last stacked cert card has passed. */
+  const strip = document.getElementById('awardsStrip');
+  if (strip && !reduced) {
+    gsap.from(strip, {
+      y: 48, opacity: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: {
+        trigger: desk.matches ? stage : cards[cards.length - 1],
+        start: () => (desk.matches ? 'bottom 62%' : 'bottom 80%'),
+        toggleActions: 'play none none reverse',
+        invalidateOnRefresh: true
+      }
     });
   }
 }

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chahat38.github.io/Ahmad-waleed-/sitemap.xml

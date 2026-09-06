@@ -1,4 +1,4 @@
-const ROLES = ['AR DEVELOPER', 'VR DEVELOPER', 'XR ENGINEER', 'UNITY DEVELOPER', 'TECHNICAL LEAD'];
+const ROLES = ['XR / AR / VR DEVELOPER', 'TECHNICAL LEAD', 'UNITY 6 DEVELOPER', 'MULTIPLAYER VR ENGINEER', 'XR & PROJECT DELIVERY'];
 
 export function initTypewriter() {
   const el = document.getElementById('eyebrowType');
