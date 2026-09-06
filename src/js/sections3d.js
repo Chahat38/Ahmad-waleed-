@@ -30,7 +30,6 @@ export function initCertRing() {
   const desk = matchMedia('(min-width: 1290px)');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let radius = 0;
-  let rotTween = null;
 
   function buildCertBack(card, i) {
     if (!card.classList.contains('cert-face') || card.querySelector('.cert-back')) return;
@@ -54,11 +53,22 @@ export function initCertRing() {
 
   function layout() {
     if (desk.matches) {
-      radius = Math.round(cards[0].offsetWidth / (2 * Math.tan(Math.PI / N))) + 54;
+      const w = cards[0].offsetWidth;
+      radius = Math.round(w / (2 * Math.tan(Math.PI / N))) + 54;
+      /* grow the ring tall enough so photo + caption never clip.
+         tallest image box = width / 1.27 (worst photo aspect), plus
+         photo padding (36), caption incl. its padding (~150) and the
+         card frame (12). Extra room is harmless — it just becomes
+         quiet space under the caption. */
+      const imgW = w - 48;
+      const imgH = imgW / 1.27;
+      const needed = Math.ceil(imgH + 36 + 150 + 12);
+      ring.style.height = Math.max(needed, 440) + 'px';
       cards.forEach((c, i) => {
         c.style.transform = `rotateY(${(i * 360) / N}deg) translateZ(${radius}px)`;
       });
     } else {
+      ring.style.height = '';
       cards.forEach(c => { c.style.transform = ''; });
     }
   }
@@ -84,28 +94,28 @@ export function initCertRing() {
     setActive();
   }
 
-  function startSpin() {
-    if (rotTween || !desk.matches) return;
-    rotTween = gsap.to(state, {
+  /* SCROLL-DRIVEN ROTATION — no timers, no CSS animation loops: the ring's
+     angle is bound to the certificate section's passage through the viewport
+     (scrub). Scroll → it turns; stop scrolling → it holds perfectly still. */
+  function initScrollSpin() {
+    gsap.to(state, {
       rot: 30 - 360,
       ease: 'none',
-      duration: 36,
-      repeat: -1,
-      onUpdate: renderRing
+      scrollTrigger: {
+        trigger: document.getElementById('certificate'),
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.9,
+        invalidateOnRefresh: true,
+        onUpdate: renderRing
+      }
     });
     renderRing();
-  }
-  function stopSpin() {
-    if (rotTween) { rotTween.kill(); rotTween = null; }
-    ring.style.transform = '';
   }
 
   if (desk.matches && !reduced) {
     cards.forEach((card, i) => buildCertBack(card, i));
-
-    /* AUTO-ROTATE LOOP — the ring slowly spins itself forever,
-       no scrolling needed; both card faces stay readably upright. */
-    startSpin();
+    initScrollSpin();
 
     gsap.from(stage, {
       scale: 0.85, opacity: 0, duration: 1, ease: 'power3.out',
@@ -143,22 +153,25 @@ export function initCertRing() {
   }
 
   /* guard against resizing across the desktop / responsive breakpoint:
-     entering desktop restarts the auto-spin, leaving it resets everything
-     back to a clean upright flat stack (fixes skew/"ulta" cards) */
-  let wasDesk = desk.matches && !reduced;
+     entering desktop restarts the scroll-positioned rotation, leaving it
+     resets the ring back to a clean upright flat stack (no skew/"ulta") */
   addEventListener('resize', () => {
-    const isDesk = desk.matches && !reduced;
     layout();
-    if (isDesk && !wasDesk) {
-      state.rot = 30;
-      startSpin();
-      setActive();
-    } else if (!isDesk && wasDesk) {
-      stopSpin();
+    if (!desk.matches) {
+      ring.style.transform = '';
       cards.forEach(c => { c.style.transform = ''; });
     }
-    wasDesk = isDesk;
   }, { passive: true });
+
+  /* hold each certificate photo at its real aspect ratio so object-fit:
+     contain never needs to crop — the card takes the scan's own shape */
+  cards.forEach(card => {
+    const img = card.querySelector('.cert-img');
+    const ph = card.querySelector('.cert-photo');
+    if (!ph || !img) return;
+    const apply = () => { if (img.naturalWidth > 0) ph.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`; };
+    if (img.complete) apply(); else img.addEventListener('load', apply, { once: true });
+  });
 
   /* Awards must NOT appear until every certificate has revealed:
      on desktop that means the ring has fully rotated through,
