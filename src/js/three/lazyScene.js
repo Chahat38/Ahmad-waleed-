@@ -7,7 +7,7 @@ function getLoader() {
   return gltfLoader;
 }
 
-export function createLazyGLBScene(el, modelUrl, { targetSize = 3, spin = 0, bob = 0, onTick } = {}) {
+export function createLazyGLBScene(el, modelUrl, { targetSize = 3, spin = 0, bob = 0, onTick, waitFor } = {}) {
   let renderer = null, scene, camera, group = null;
   let raf = 0, running = false, inited = false, t0 = performance.now();
 
@@ -84,8 +84,11 @@ export function createLazyGLBScene(el, modelUrl, { targetSize = 3, spin = 0, bob
     );
   }
 
-  function init() {
+  async function init() {
     inited = true;
+    try {
+      if (waitFor) await Promise.race([waitFor, new Promise(r => setTimeout(r, 2500))]);
+    } catch { /* gate failed — load anyway */ }
     try {
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
       renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));

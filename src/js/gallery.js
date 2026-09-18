@@ -84,15 +84,24 @@ export function initGallery() {
   const bar = document.getElementById('pgBar');
 
   function buildDesktop() {
-    const getDist = () => Math.max(0, track.scrollWidth - innerWidth);
+    const bracket = () => {
+      const cur = gsap.getProperty(track, 'x') || 0;
+      const f = cards[0].getBoundingClientRect();
+      const l = cards[cards.length - 1].getBoundingClientRect();
+      const fLeft = f.left - cur, lLeft = l.left - cur;
+      return [
+        -(fLeft + f.width / 2 - innerWidth / 2),
+        -(lLeft + l.width / 2 - innerWidth / 2)
+      ];
+    };
 
-    st = gsap.to(track, {
-      x: () => -getDist(),
+    st = gsap.fromTo(track, { x: () => bracket()[0] }, {
+      x: () => bracket()[1],
       ease: 'none',
       scrollTrigger: {
         trigger: '#portfolio',
         start: 'top top',
-        end: () => '+=' + (getDist() + innerHeight * 0.15),
+        end: () => '+=' + (Math.abs(bracket()[1] - bracket()[0]) + innerHeight * 0.15),
         pin: true,
         scrub: 1,
         anticipatePin: 1,

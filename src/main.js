@@ -11,6 +11,7 @@ import { initSkills } from './js/skills.js';
 import { initBgVideos } from './js/bgVideo.js';
 import { initGallery } from './js/gallery.js';
 import { initScrollFX } from './js/scrollFx.js';
+import { initMobileFx } from './js/mobileFx.js';
 import { initCertRing, initDossiers } from './js/sections3d.js';
 import { initPopup } from './js/popup.js';
 import { initTilt } from './js/tilt.js';
@@ -30,6 +31,7 @@ initPopup();
 initTilt();
 initFabs();
 initScrollFX();
+initMobileFx();
 initCertRing();
 initDossiers();
 
