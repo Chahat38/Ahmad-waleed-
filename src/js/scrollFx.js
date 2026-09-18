@@ -33,10 +33,6 @@ function heroFX() {
     y: 140, scale: 0.8, rotate: 5, opacity: 0.2, ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end, scrub: true }
   });
-  gsap.to('.hero-text, .hero-stats-wrap, .hero .status-chip, .hero .eyebrow', {
-    y: 70, opacity: 0, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-  });
 
   gsap.from('.hero .status-chip', {
     y: -30, opacity: 0, duration: 0.7, ease: 'power3.out'

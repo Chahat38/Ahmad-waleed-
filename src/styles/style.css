@@ -333,6 +333,10 @@ main section { position: relative; }
 }
 @keyframes rotate { to { transform: rotate(360deg); } }
 
+.hero-orbit {
+  position: absolute; inset: 0;
+  animation: rotate 30s linear infinite;
+}
 .hero-badge {
   position: absolute;
   font-family: var(--font-display); font-size: 10px; font-weight: 700;
@@ -342,14 +346,14 @@ main section { position: relative; }
   border: 1px solid var(--line-strong);
   color: var(--accent);
   box-shadow: var(--shadow-sm);
-  animation: badge-float 5s ease-in-out infinite;
+  animation: rotate 30s linear infinite reverse;
 }
-.hero-badge.b1 { top: 4%; left: -12%; animation-delay: 0s; }
-.hero-badge.b2 { bottom: 12%; right: -14%; animation-delay: 1.4s; }
-.hero-badge.b3 { top: 38%; right: -18%; animation-delay: 2.6s; }
-.hero-badge.b4 { top: 4%; right: -12%; animation-delay: 0.7s; }
-.hero-badge.b5 { top: 38%; left: -18%; animation-delay: 2s; }
-.hero-badge.b6 { bottom: 12%; left: -14%; animation-delay: 3.2s; }
+.hero-badge.b1 { top: 4%; left: -12%; }
+.hero-badge.b2 { bottom: 12%; right: -14%; }
+.hero-badge.b3 { top: 38%; right: -18%; }
+.hero-badge.b4 { top: 4%; right: -12%; }
+.hero-badge.b5 { top: 38%; left: -18%; }
+.hero-badge.b6 { bottom: 12%; left: -14%; }
 @keyframes badge-float { 50% { transform: translateY(-9px); } }
 
 .hero-text { max-width: 660px; }
@@ -401,34 +405,53 @@ main section { position: relative; }
   display: flex; flex-direction: column; align-items: center; gap: 14px;
 }
 .hero-stats-tag {
+  display: inline-flex; align-items: center; gap: 12px;
   font-family: var(--font-display); font-size: 10px;
   letter-spacing: 3px; color: var(--muted);
 }
+.hero-stats-tag::before,
+.hero-stats-tag::after {
+  content: '';
+  width: 34px; height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 60%, transparent));
+}
+.hero-stats-tag::after { transform: scaleX(-1); }
 .hero-stats {
-  display: flex; gap: clamp(14px, 3vw, 44px);
-  flex-wrap: wrap; justify-content: center;
-  width: 100%; max-width: 1100px;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: clamp(14px, 3vw, 44px);
+  width: 100%; max-width: 980px;
 }
 .hstat {
+  position: relative;
   flex: 1; min-width: 140px; max-width: 210px;
   text-align: center;
-  padding: 18px 12px;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  padding: 20px 12px 14px;
+  border-radius: 14px;
+  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
 }
-.hstat:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: var(--shadow-md); }
+.hstat::before {
+  content: '';
+  position: absolute; left: 50%; bottom: 6px;
+  width: 0; height: 2px;
+  transform: translateX(-50%);
+  background: var(--grad);
+  border-radius: 2px;
+  transition: width 0.35s;
+}
+.hstat:hover { transform: translateY(-4px); background: var(--panel); box-shadow: var(--shadow-sm); }
+.hstat:hover::before { width: 52%; }
 .hstat-num {
   display: block;
   font-family: var(--font-display); font-weight: 800;
-  font-size: clamp(24px, 3vw, 34px);
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height: 1;
   background: var(--grad);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .hstat-label {
+  display: block;
+  margin-top: 8px;
   font-size: 11px; letter-spacing: 1.4px;
   text-transform: uppercase; color: var(--muted);
 }
@@ -1264,7 +1287,7 @@ main section { position: relative; }
 }
 .award-card {
   position: relative;
-  display: flex; align-items: flex-start; gap: 18px;
+  display: flex; flex-direction: column; align-items: stretch; gap: 12px;
   padding: clamp(22px, 2.5vw, 30px);
   background: var(--panel);
   border: 1px solid var(--line);
@@ -1312,18 +1335,14 @@ main section { position: relative; }
   font-family: var(--font-display); font-size: 9px;
   letter-spacing: 2.2px; color: var(--accent);
 }
-.award-tag {
-  font-family: var(--font-display); font-size: 9px;
-  letter-spacing: 2.2px; color: var(--accent);
-}
-.award-body { flex: 1; min-width: 0; padding-right: 52px; }
+.award-body { flex: none; width: 100%; min-width: 0; padding-right: 0; }
 .award-body h4 { font-family: var(--font-head); font-size: 18px; font-weight: 700; margin-top: 6px; }
 .award-body p { font-size: 13px; color: var(--muted); margin-top: 8px; }
 .award-media {
   position: relative;
   display: grid; place-items: center; gap: 6px;
   aspect-ratio: 16 / 6.5;
-  margin-top: 14px;
+  margin-top: 4px;
   border-radius: 12px;
   border: 1.5px dashed var(--line-strong);
   background:
@@ -1331,11 +1350,19 @@ main section { position: relative; }
     var(--bg2);
   color: var(--muted);
   text-align: center;
+}
+.award-media.has-img {
+  display: block;
+  aspect-ratio: auto;
+  padding: 10px;
+  border-style: solid;
+  border-color: var(--line);
+  background: var(--bg2);
   overflow: hidden;
 }
 .award-media svg { width: 30px; height: 30px; fill: none; stroke: rgba(232, 109, 34, 0.55); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 .award-media span { font-family: var(--font-display); font-size: 9px; letter-spacing: 2.2px; color: rgba(232, 109, 34, 0.7); }
-.award-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.award-media img { display: block; width: 100%; height: auto; object-fit: contain; border-radius: 8px; }
 .award-media.has-img svg, .award-media.has-img span { display: none; }
 
 /* ============ VOLUNTEERING PRO ============ */
@@ -1429,6 +1456,7 @@ main section { position: relative; }
 .dos-media svg { width: 40px; height: 40px; fill: none; stroke: rgba(232, 109, 34, 0.55); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 .dos-media span { font-family: var(--font-display); font-size: 9px; letter-spacing: 2.4px; color: rgba(232, 109, 34, 0.7); }
 .dos-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dos-media.has-img { border-style: solid; border-color: var(--line); background: var(--bg2); }
 .dos-media.has-img svg, .dos-media.has-img span { display: none; }
 .dos-img-caption {
   display: block;
@@ -1687,6 +1715,7 @@ footer {
 }
 .detail-media { margin-bottom: 18px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
 .detail-media img { width: 100%; }
+.detail-media iframe { display: block; width: 100%; height: 70vh; border: 0; background: #fff; }
 .detail-media-placeholder {
   display: grid; place-items: center;
   gap: 6px;

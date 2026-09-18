@@ -25,11 +25,19 @@ export function initPopup() {
     mediaEl.innerHTML = '';
     mediaEl.hidden = false;
     if (d.img) {
-      const img = document.createElement('img');
-      img.src = d.img;
-      img.alt = d.title || '';
-      img.loading = 'lazy';
-      mediaEl.appendChild(img);
+      if (/\.pdf$/i.test(d.img)) {
+        const frame = document.createElement('iframe');
+        frame.src = d.img;
+        frame.title = d.title || '';
+        frame.setAttribute('loading', 'lazy');
+        mediaEl.appendChild(frame);
+      } else {
+        const img = document.createElement('img');
+        img.src = d.img;
+        img.alt = d.title || '';
+        img.loading = 'lazy';
+        mediaEl.appendChild(img);
+      }
     } else {
       mediaEl.hidden = true;
     }

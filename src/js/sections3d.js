@@ -101,7 +101,7 @@ export function initCertRing() {
     gsap.to(state, {
       rot: '+=360',
       ease: 'none',
-      duration: 18,
+      duration: 32,
       repeat: -1,
       onUpdate: renderRing
     });
