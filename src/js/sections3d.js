@@ -3,9 +3,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ============ CERTIFICATES — 3D ROTATING RING (no pin) ============
-   Ring rotates while the certificate section naturally passes through
-   the viewport. No ScrollTrigger pinning → sections can never overlap. */
+/* ============ CERTIFICATES — 3D AUTO-ROTATING RING (no pin) ============
+   Desktop: the ring continuously rotates on its own in a 360° loop.
+   No ScrollTrigger pinning → sections can never overlap. */
 export function initCertRing() {
   const stage = document.getElementById('certStage');
   const ring = document.getElementById('certRing');
@@ -94,28 +94,23 @@ export function initCertRing() {
     setActive();
   }
 
-  /* SCROLL-DRIVEN ROTATION — no timers, no CSS animation loops: the ring's
-     angle is bound to the certificate section's passage through the viewport
-     (scrub). Scroll → it turns; stop scrolling → it holds perfectly still. */
-  function initScrollSpin() {
+  /* AUTO-ROTATION — desktop only: the ring turns on its own in a single
+     continuous 360° loop (like a carousel), so every certificate cycles
+     through the front. No scroll binding, no user input required. */
+  function initAutoSpin() {
     gsap.to(state, {
-      rot: 30 - 360,
+      rot: '+=360',
       ease: 'none',
-      scrollTrigger: {
-        trigger: document.getElementById('certificate'),
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 0.9,
-        invalidateOnRefresh: true,
-        onUpdate: renderRing
-      }
+      duration: 18,
+      repeat: -1,
+      onUpdate: renderRing
     });
     renderRing();
   }
 
   if (desk.matches && !reduced) {
     cards.forEach((card, i) => buildCertBack(card, i));
-    initScrollSpin();
+    initAutoSpin();
 
     gsap.from(stage, {
       scale: 0.85, opacity: 0, duration: 1, ease: 'power3.out',

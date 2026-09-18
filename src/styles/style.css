@@ -307,6 +307,10 @@ main section { position: relative; }
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.hero-name-left, .hero-name-right, .hero-model-layer {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
 
 .hero-model-layer {
   position: relative;
@@ -343,6 +347,9 @@ main section { position: relative; }
 .hero-badge.b1 { top: 4%; left: -12%; animation-delay: 0s; }
 .hero-badge.b2 { bottom: 12%; right: -14%; animation-delay: 1.4s; }
 .hero-badge.b3 { top: 38%; right: -18%; animation-delay: 2.6s; }
+.hero-badge.b4 { top: 4%; right: -12%; animation-delay: 0.7s; }
+.hero-badge.b5 { top: 38%; left: -18%; animation-delay: 2s; }
+.hero-badge.b6 { bottom: 12%; left: -14%; animation-delay: 3.2s; }
 @keyframes badge-float { 50% { transform: translateY(-9px); } }
 
 .hero-text { max-width: 660px; }
@@ -1234,6 +1241,21 @@ main section { position: relative; }
 .cert-proof-bar small { font-size: 11px; color: var(--muted); }
 
 /* ============ AWARDS STRIP ============ */
+.awards-hud-tag {
+  display: block;
+  text-align: center;
+  font-family: var(--font-display); font-size: 10px;
+  letter-spacing: 3px; color: var(--muted);
+  margin: 0 auto 18px;
+  max-width: 1150px;
+}
+.awards-hud-tag::before, .awards-hud-tag::after {
+  content: '';
+  display: inline-block;
+  width: 40px; height: 1px;
+  margin: 0 12px 4px;
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+}
 .awards-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1241,28 +1263,60 @@ main section { position: relative; }
   max-width: 1150px; margin: 0 auto; width: 100%;
 }
 .award-card {
+  position: relative;
   display: flex; align-items: flex-start; gap: 18px;
-  padding: clamp(20px, 2.5vw, 28px);
+  padding: clamp(22px, 2.5vw, 30px);
   background: var(--panel);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 16px;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  will-change: transform;
 }
-.award-card:hover { transform: translateY(-3px); border-color: var(--line-strong); box-shadow: var(--shadow-md); }
+.award-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 18px; right: 18px;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: var(--grad);
+  opacity: 0.85;
+}
+.award-card:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line-strong)); box-shadow: var(--shadow-md), 0 0 24px color-mix(in srgb, var(--accent) 12%, transparent); }
+.award-index {
+  position: absolute; top: 16px; right: 18px;
+  font-family: var(--font-display); font-size: 9px;
+  letter-spacing: 2.2px; color: var(--muted);
+}
+.award-index::before { content: '// '; color: var(--accent); }
 .award-ico {
+  position: relative;
   flex-shrink: 0;
   display: grid; place-items: center;
-  width: 52px; height: 52px; border-radius: 14px;
+  width: 54px; height: 54px; border-radius: 14px;
   background: var(--accent-soft);
-  border: 1px solid var(--line-strong);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
   color: var(--accent);
 }
+.award-ico::after {
+  content: '';
+  position: absolute; inset: -7px;
+  border-radius: 18px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 40%, transparent);
+  animation: dos-spin 26s linear infinite;
+  pointer-events: none;
+}
 .award-ico svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.award-card:hover .award-ico { box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 32%, transparent); }
 .award-tag {
   font-family: var(--font-display); font-size: 9px;
   letter-spacing: 2.2px; color: var(--accent);
 }
+.award-tag {
+  font-family: var(--font-display); font-size: 9px;
+  letter-spacing: 2.2px; color: var(--accent);
+}
+.award-body { flex: 1; min-width: 0; padding-right: 52px; }
 .award-body h4 { font-family: var(--font-head); font-size: 18px; font-weight: 700; margin-top: 6px; }
 .award-body p { font-size: 13px; color: var(--muted); margin-top: 8px; }
 .award-media {
@@ -1376,6 +1430,15 @@ main section { position: relative; }
 .dos-media span { font-family: var(--font-display); font-size: 9px; letter-spacing: 2.4px; color: rgba(232, 109, 34, 0.7); }
 .dos-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .dos-media.has-img svg, .dos-media.has-img span { display: none; }
+.dos-img-caption {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin: -6px 0 14px;
+}
 .dos-meta {
   display: flex; justify-content: space-between; align-items: center;
   gap: 12px; margin-bottom: 16px;

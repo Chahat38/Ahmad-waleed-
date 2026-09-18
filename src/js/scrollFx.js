@@ -12,6 +12,7 @@ export function initScrollFX() {
   aboutFX();
   skillsFX();
   experienceFX();
+  awardsFX();
   volunteeringIntroFX();
   footerFX();
   hudFrame();
@@ -21,11 +22,11 @@ export function initScrollFX() {
 function heroFX() {
   const end = 'bottom 35%';
   gsap.to('.hero-name-left', {
-    xPercent: -55, rotateY: 18, opacity: 0, ease: 'none',
+    xPercent: -55, y: -42, opacity: 0, ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end, scrub: true }
   });
   gsap.to('.hero-name-right', {
-    xPercent: 55, rotateY: -18, opacity: 0, ease: 'none',
+    xPercent: 55, y: -42, opacity: 0, ease: 'none',
     scrollTrigger: { trigger: '.hero', start: 'top top', end, scrub: true }
   });
   gsap.to('.hero-model-layer', {
@@ -34,7 +35,7 @@ function heroFX() {
   });
   gsap.to('.hero-text, .hero-stats-wrap, .hero .status-chip, .hero .eyebrow', {
     y: 70, opacity: 0, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 55%', scrub: true }
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
   gsap.from('.hero .status-chip', {
@@ -206,6 +207,29 @@ function experienceFX() {
         rx(py * -5); ry(px * 7);
       });
       entry.addEventListener('pointerleave', () => { rx(0); ry(0); });
+    });
+  }
+}
+
+/* ================= AWARDS — recognition log entrance + pointer tilt ================= */
+function awardsFX() {
+  gsap.from('.award-card', {
+    y: 44, opacity: 0, stagger: 0.09, duration: 0.85, ease: 'power3.out',
+    scrollTrigger: replay('.awards-strip', 'top 82%')
+  });
+
+  if (matchMedia('(hover: hover) and (min-width: 1025px)').matches) {
+    gsap.set('.award-card', { transformPerspective: 900 });
+    document.querySelectorAll('.award-card').forEach(card => {
+      const rx = gsap.quickTo(card, 'rotationX', { duration: 0.6, ease: 'power2.out' });
+      const ry = gsap.quickTo(card, 'rotationY', { duration: 0.6, ease: 'power2.out' });
+      card.addEventListener('pointermove', e => {
+        const b = card.getBoundingClientRect();
+        const px = (e.clientX - b.left) / b.width - 0.5;
+        const py = (e.clientY - b.top) / b.height - 0.5;
+        rx(py * -5); ry(px * 7);
+      });
+      card.addEventListener('pointerleave', () => { rx(0); ry(0); });
     });
   }
 }

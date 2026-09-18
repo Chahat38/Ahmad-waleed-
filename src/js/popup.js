@@ -30,13 +30,6 @@ export function initPopup() {
       img.alt = d.title || '';
       img.loading = 'lazy';
       mediaEl.appendChild(img);
-    } else if (d.credId) {
-      mediaEl.innerHTML = `
-        <div class="detail-media-placeholder">
-          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="M4 19l5.5-5.5 3 3L17 12l3 3"/></svg>
-          <b>Certificate Image</b>
-          <span>Placeholder — scan / photo yahan add karein</span>
-        </div>`;
     } else {
       mediaEl.hidden = true;
     }
