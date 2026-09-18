@@ -339,6 +339,7 @@ main section { position: relative; }
 }
 .hero-badge {
   position: absolute;
+  margin-top: -13px;
   font-family: var(--font-display); font-size: 10px; font-weight: 700;
   letter-spacing: 1.6px;
   padding: 6px 12px; border-radius: 99px;
@@ -348,12 +349,12 @@ main section { position: relative; }
   box-shadow: var(--shadow-sm);
   animation: rotate 30s linear infinite reverse;
 }
-.hero-badge.b1 { top: 4%; left: -12%; }
-.hero-badge.b2 { bottom: 12%; right: -14%; }
-.hero-badge.b3 { top: 38%; right: -18%; }
-.hero-badge.b4 { top: 4%; right: -12%; }
-.hero-badge.b5 { top: 38%; left: -18%; }
-.hero-badge.b6 { bottom: 12%; left: -14%; }
+.hero-badge.b1 { top: 0%;    left: 50%;  margin-left: -35px; }
+.hero-badge.b2 { top: 25%;   left: 93.3%; margin-left: -29px; }
+.hero-badge.b3 { top: 75%;   left: 93.3%; margin-left: -44px; }
+.hero-badge.b4 { top: 100%;  left: 50%;  margin-left: -33px; }
+.hero-badge.b5 { top: 75%;   left: 6.7%;  margin-left: -56px; }
+.hero-badge.b6 { top: 25%;   left: 6.7%;  margin-left: -22px; }
 @keyframes badge-float { 50% { transform: translateY(-9px); } }
 
 .hero-text { max-width: 660px; }
@@ -2029,8 +2030,8 @@ footer {
 
   .hero-name-row { flex-direction: column; gap: 8px; }
   .hero-model-layer { order: -1; }
-  .hero-badge.b1 { left: -6%; }
-  .hero-badge.b2 { right: -6%; }
+  .hero-badge.b1 { top: 0%; left: 50%; margin-left: -35px; }
+  .hero-badge.b2 { top: 100%; left: 50%; margin-left: -29px; }
   .hero-badge.b3 { display: none; }
 
   .about-wrap { grid-template-columns: 1fr; }
