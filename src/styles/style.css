@@ -2030,9 +2030,6 @@ footer {
 
   .hero-name-row { flex-direction: column; gap: 8px; }
   .hero-model-layer { order: -1; }
-  .hero-badge.b1 { top: 0%; left: 50%; margin-left: -35px; }
-  .hero-badge.b2 { top: 100%; left: 50%; margin-left: -29px; }
-  .hero-badge.b3 { display: none; }
 
   .about-wrap { grid-template-columns: 1fr; }
 
