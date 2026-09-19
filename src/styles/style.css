@@ -2048,6 +2048,7 @@ footer {
   }
   .pg-track .v-card { width: 100%; }
   .v-media { aspect-ratio: 16 / 9; }
+  .v-media video { object-fit: contain; }
   .pg-progress { display: none; }
 
   .fixed-vr-hud { display: none; }

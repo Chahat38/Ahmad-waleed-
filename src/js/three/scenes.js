@@ -5,15 +5,11 @@ export function initHeroScene(avatarUrl) {
   const el = document.getElementById('heroAvatarCanvas');
   if (!el) return;
 
-  // Give the hero background reel priority: the 3D model sits out until the
-  // video is actually playing (or ~2.5s), so both don't download at once.
-  const video = el.closest('section')?.querySelector('video[data-cinema]');
+  // Start as soon as the browser is idle (~<1s) instead of stalling on the
+  // background reel buffering — model is only ~1.4MB.
   const waitFor = new Promise(resolve => {
-    if (!video) { resolve(); return; }
-    for (const ev of ['loadeddata', 'playing']) {
-      video.addEventListener(ev, () => resolve(), { once: true });
-    }
-    video.addEventListener('error', () => resolve(), { once: true });
+    if ('requestIdleCallback' in window) requestIdleCallback(resolve, { timeout: 700 });
+    else setTimeout(resolve, 700);
   });
 
   createLazyGLBScene(el, avatarUrl, { targetSize: 4.0, spin: 0, bob: 0, waitFor });

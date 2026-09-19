@@ -87,7 +87,7 @@ export function createLazyGLBScene(el, modelUrl, { targetSize = 3, spin = 0, bob
   async function init() {
     inited = true;
     try {
-      if (waitFor) await Promise.race([waitFor, new Promise(r => setTimeout(r, 2500))]);
+      if (waitFor) await Promise.race([waitFor, new Promise(r => setTimeout(r, 1200))]);
     } catch { /* gate failed — load anyway */ }
     try {
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
