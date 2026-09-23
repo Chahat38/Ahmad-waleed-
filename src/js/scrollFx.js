@@ -58,7 +58,7 @@ function heroFX() {
     scale: 0.4, opacity: 0, duration: 1.2, delay: 0.3, ease: 'power4.out'
   });
   gsap.from('.hstat', {
-    y: 44, opacity: 0, stagger: 0.08, duration: 0.7, delay: 0.5, ease: 'power3.out'
+    opacity: 0, stagger: 0.08, duration: 0.7, delay: 0.5, ease: 'power3.out'
   });
 
   /* pointer parallax on the big words */
