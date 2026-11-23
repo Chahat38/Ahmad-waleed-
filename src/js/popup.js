@@ -46,8 +46,7 @@ export function initPopup() {
     if (isCert) {
       credsEl.innerHTML = `
         <div class="cred-row"><span>CREDENTIAL ID</span><b>${d.credId}</b></div>
-        <div class="cred-row"><span>ISSUED</span><b>${d.issued || '—'}</b></div>
-        <div class="cred-row"><span>VERIFICATION</span><b>${d.url ? `<a href="${d.url}" target="_blank" rel="noopener">Verify credential ↗</a>` : '<i>placeholder — link add karein</i>'}</b></div>`;
+        <div class="cred-row"><span>ISSUED</span><b>${d.issued || '—'}</b></div>`;
       bodyEl.before(credsEl);
     } else {
       credsEl.remove();
